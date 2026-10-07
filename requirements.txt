@@ -1,0 +1,8 @@
+django
+djangorestframework
+djangorestframework-simplejwt[crypto]
+python-dotenv
+gunicorn
+psycopg2-binary
+boto3
+django-storages

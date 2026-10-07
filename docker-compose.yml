@@ -1,0 +1,60 @@
+services:
+
+  postgres_db:
+    image: postgres:17-alpine
+    env_file:
+      - .env.local
+
+    ports:
+      - "5432:5432"
+
+    restart: always
+
+    volumes:
+      - pgdata_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+
+  my_web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    image: dj_teraform:latest
+
+    env_file:
+      - .env.local
+
+    depends_on:
+      postgres_db:
+        condition: service_healthy
+
+    volumes:
+      - static_volume:/app/staticfiles
+
+
+  my_nginx:
+    image: nginx:latest
+
+    restart: always
+
+    ports:
+      - "80:80"
+
+    volumes:
+      - static_volume:/usr/share/nginx/html/static:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+
+    depends_on:
+      - my_web
+
+
+volumes:
+  pgdata_data:
+  static_volume:
