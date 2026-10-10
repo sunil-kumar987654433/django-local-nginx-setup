@@ -22,7 +22,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-zv!$vvrqvh_2jl6e1sj0wvi1rn!=w+xaf7a(6wrs&i2_$7(z^-'
+with open(BASE_DIR / 'secret_key.txt', 'r') as read_file:
+    SECRET_KEY = read_file.read().strip()
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -60,7 +61,7 @@ ROOT_URLCONF = 'project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -78,23 +79,23 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': os.environ.get("POSTGRES_ENGINE"),
-        'NAME': os.environ.get("POSTGRES_DB"),
-        'USER': os.getenv("POSTGRES_USER"),
-        'PASSWORD': os.getenv("POSTGRES_PASSWORD"),
-        'HOST': os.getenv("POSTGRES_HOST"),  
-        'PORT': os.getenv("POSTGRES_PORT"),       
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': os.environ.get("POSTGRES_ENGINE"),
+#         'NAME': os.environ.get("POSTGRES_DB"),
+#         'USER': os.getenv("POSTGRES_USER"),
+#         'PASSWORD': os.getenv("POSTGRES_PASSWORD"),
+#         'HOST': os.getenv("POSTGRES_HOST"),  
+#         'PORT': os.getenv("POSTGRES_PORT"),       
+#     }
+# }
 
 
 
@@ -205,58 +206,21 @@ SIMPLE_JWT = {
 }
 
 
+# from logging_config import LOGGING
 
 
-# LOGGING = {
-#     "version": 1,
-#     "disable_existing_loggers": False,
-#     "formatters": {
-#         "verbose": {
-#             "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
-#             "style": "{",
-#         },
-#         "simple": {
-#             "format": "{levelname} {message}",
-#             "style": "{",
-#         },
-#     },
-#     "filters": {
-#         "special": {
-#             "()": "project.logging.SpecialFilter",
-#             "foo": "bar",
-#         },
-#         "require_debug_true": {
-#             "()": "django.utils.log.RequireDebugTrue",
-#         },
-#     },
-#     "handlers": {
-#         "file": {
-#             "level": os.getenv('DJANGO_LOG_LEVEL', 'WARNING'),
-#             "filters": ["require_debug_true"],
-#             "class": "logging.FileHandler",
-#             "formatter": "verbose",
-#             "filename": "debug.log",
-#         },
-#         "mail_admins": {
-#             "level": "ERROR",
-#             "class": "django.utils.log.AdminEmailHandler",
-#             "filters": ["special"],
-#         },
-#     },
-#     "loggers": {
-#         "django": {
-#             "handlers": ["file"],
-#             "propagate": True,
-#         },
-#         "django.request": {
-#             "handlers": ["mail_admins"],
-#             "level": "ERROR",
-#             "propagate": False,
-#         },
-#         "myproject.custom": {
-#             "handlers": ["file", "mail_admins"],
-#             "level": "INFO",
-#             "filters": ["special"],
-#         },
-#     },
-# }
+
+# ==============================
+# uncomment in production and after ssl certificate
+
+# SECURE_SSL_REDIRECT = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
+
+
+#HSTS settings
+# SECURE_HSTS_SECONDS = 365*60*365 
+# SECURE_HSTS_INCLUDE_SUBDOMAINS =  True
+# SECURE_HSTS_PRELOAD = True
+
+# ============================

@@ -7,10 +7,24 @@ from rest_framework_simplejwt.exceptions import AuthenticationFailed
 # from django.core.exceptions import ValidationError, BadRequest
 from rest_framework.exceptions import ValidationError, AuthenticationFailed
 
+
+# import logging
+
+# logger = logging.getLogger(__name__)
+
+# logger.info("========== TEST LOG ==========")
+
+
+
 class RegisterApiViewSet(viewsets.ModelViewSet):
     serializer_class = RegisterSerializers
     queryset = CustomUser.objects.all()
     http_method_names = ['post']
+
+    def perform_create(self, serializer):
+        # logger.info("USER REGISTER API CALLED")
+        # logger.info("Request data: %s", self.request.data)
+        return super().perform_create(serializer)
 
 class SignInApiViewSet(viewsets.ModelViewSet):
     serializer_class = SignInSerializers

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Test Page{% endblock title %}
+
+{% block css %}
+<link href="{% static '/website/css/test.css'%}", rel="stylesheet">
+{% endblock css %}
+
+ {% block content %} <p>Test page</p>{% endblock content %}
+
+    {% block js %}
+    <script src="{% static '/website/js/test.js'%}"></script>
+    {% endblock js %}

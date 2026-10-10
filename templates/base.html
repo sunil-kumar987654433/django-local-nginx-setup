@@ -1,0 +1,18 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock title %}</title>
+    <link href="{% static '/assets/css/bootstrap6.0.min.css' %}"  rel="stylesheet">
+    {% block css %} {% endblock css %}
+  </head>
+  <body>
+
+    {% block content %} {% endblock content %}
+
+    <script src="{% static '/assets/js/bootstrap6.bundle.min.js' %}"></script>
+    {% block js %}{% endblock js %}
+  </body>
+</html>

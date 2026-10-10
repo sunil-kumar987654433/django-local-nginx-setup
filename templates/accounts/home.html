@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Home{% endblock title %}
+
+
+    {% block css %} 
+    <link href="{% static '/website/css/index.css' %}"  rel="stylesheet">
+    {% endblock css %}
+
+    {% block content %}
+        <h1>Hello Ravi</h1>
+    {% endblock content %}
+
+
+
+    {% block js %}
+    <script src="{% static '/website/js/index.js' %}"></script>
+    
+    {% endblock js %}
